@@ -1,3 +1,14 @@
+# OWL-TLS
+OWL (Obscured Wire Layer) is a pure JavaScript end-to-end encrypted messaging scheme that can be used in any medium - including but not limited to avian carriers. The underlying encryption protocol is TLS 1.2, implemented by the excellet [forge](https://github.com/digitalbazaar/forge) library.
+
+This is a strictly educational tool, which can help demonstrating how TLS and public-key encryption systems works, and also proves that end-to-end encrpytions can be used over practically any transport, including SMS, emails, postcards, and tiny notes delivered by pegions. While in theory, using TLS 1.2 with proper encrpytion parameters is considered secured, in practice this is an educational tool implemented in JavaScript and running inside a browser, and therefore might have some volunrabilities or weakness that can make it unsecured. If you need a proper encyption, consider tools that provide high level of security and confidentiality, such as [GPG](https://gnupg.org/), [OpenSSL](https://www.openssl.org/) and more.
+
+## How to use
+
+## Development
+
+### Requirements
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
