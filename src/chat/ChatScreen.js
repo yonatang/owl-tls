@@ -1,7 +1,9 @@
 import { useContext, useState } from "react"
-import { Button, Col, Form, InputGroup, Row } from "react-bootstrap"
+import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux";
 import { TlsContext } from "../certs/TlsContext";
+import SentChatBubble from "./SentChatBubble";
+import RecvChatBubble from "./RecvChatBubble";
 
 function ChatScreen(){
 
@@ -10,6 +12,7 @@ function ChatScreen(){
 
     const txMessages = useSelector((state)=>state.messages.txMessages);
     const rxMessages = useSelector((state)=>state.messages.rxMessages);
+    const messages = useSelector((state)=>state.messages.messages);
     const isConnected=useSelector((state)=>state.messages.connected);
     
     const [textToSend,setTextToSend] = useState('');
@@ -36,18 +39,18 @@ function ChatScreen(){
     }
 
     return <>
+
         <Button disabled={initAsClient || initAsServer} onClick={e=>initAChat(true)}>Initiate a chat</Button>
         <Button disabled={initAsClient || initAsServer} onClick={e=>initAChat(false)}>Start a chat</Button>
-
-        <h2>Messages sent</h2>
-        {txMessages.map((m,idx)=><li key={idx}>
-            [{m.type}] <code style={{userSelect: "all", cursor: "pointer"}}>{m.encrypted}</code> {m.plain}
-        </li>)}
-
-        <h2>Messages recieved</h2>
-        {rxMessages.map((m,idx)=><li key={idx}>
-            [{m.type}] {m.plain} <code>{m.encrypted}</code>
-            </li>)}
+        <Container>
+        <h2>Messages</h2>
+        {messages.map((m,idx)=>{
+            if (m.sentMessage) {
+                return <SentChatBubble key={idx} message={m}/>
+            } else {
+                return <RecvChatBubble key={idx} message={m}/>
+            }
+        })}
 
          <Form.Group as={Row} className="mb-3">
             <Form.Label column sm="2">
@@ -92,6 +95,7 @@ function ChatScreen(){
                 </InputGroup>
             </Col>
         </Form.Group>
+        </Container>
         
     </>
 }

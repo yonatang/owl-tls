@@ -18,9 +18,9 @@ const TlsContextProvider = ({children}) => {
         let isConnected = getState().messages.connected
         if (isConnected){
           let plainMessage = getState().messages.lastTxPlainMessage;
-          dispatch(addTxMessage({encrypted:encryptedMessage,plain:plainMessage,type:"chat"}))
+          dispatch(addTxMessage({encrypted:encryptedMessage,plain:plainMessage,category:"chat"}))
         } else {
-          dispatch(addTxMessage({encrypted:encryptedMessage,plain:"",type:"handshake"}))
+          dispatch(addTxMessage({encrypted:encryptedMessage,plain:"",category:"handshake"}))
         }
     }
 
@@ -69,12 +69,6 @@ const TlsContextProvider = ({children}) => {
                 dispatch(connectionEstablished());
             },
             closed: function(c) {
-                // setDialogDump(prev=>prev+'disconnected\n\n');
-                // if(success) {
-                //   console.log('PASS');
-                // } else {
-                //   console.log('FAIL');
-                // }
             },
             error: function(c, error) {
                 dispatch(addRxMessage({plain:error.message,encrypted:"",type:"error"}));
@@ -94,9 +88,9 @@ const TlsContextProvider = ({children}) => {
 
       if (isConnected) {
         let plain = getState().messages.lastRxPlainMessage;
-        dispatch(addRxMessage({encrypted:message,plain:plain,type:"chat"}))
+        dispatch(addRxMessage({encrypted:message,plain:plain,category:"chat"}))
       } else {
-        dispatch(addRxMessage({encrypted:message,plain:"",type:"handshake"}))
+        dispatch(addRxMessage({encrypted:message,plain:"",category:"handshake"}))
       }
     }
 
