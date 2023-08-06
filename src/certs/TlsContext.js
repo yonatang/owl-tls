@@ -73,9 +73,12 @@ const TlsContextProvider = ({ children }) => {
         console.log('Client received heartbeat: ' + payload.getBytes());
       },
       connected: function (c) {
-        console.log('Connected!');
+        let peerName = c.peerCertificate.issuer.attributes[0].value;
 
-        dispatch(connectionEstablished());
+        let cert = forge.pki.certificateFromPem(c.getCertificate());
+        let yourName = cert.issuer.attributes[0].value;
+        console.log('Connected with ',peerName, "(you are",yourName,')');
+        dispatch(connectionEstablished({peerName,yourName}));
       },
       closed: function (c) {
       },

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, ToastContainer } from "react-bootstrap";
+import { useSelector } from "react-redux"
 import ReactTimeAgo from "react-time-ago";
 import AutoHideAlert from "../AutoHideAlert";
 
@@ -9,6 +10,8 @@ export default function SentChatBubble({ message }) {
     const [showAlert, setShowAlert] = useState(false);
     const [collapsed, setCollapsed] = useState(false)
     const [collapsedOnce, setCollapsedOnce] = useState(false)
+    const yourName = useSelector(state => state.messages.yourName)
+
     const handleOnClick = () => {
         setCollapsedOnce(true)
         navigator.clipboard.writeText(encrypted).then(
@@ -30,7 +33,7 @@ export default function SentChatBubble({ message }) {
         </span>
     return <>
         <p style={{ textAlign: "left" }}>
-            <ReactTimeAgo date={timestamp} /><br />
+            <ReactTimeAgo date={timestamp} />({yourName})<br />
             {encrpytedPart}
             <AutoHideAlert
                 show={showAlert}

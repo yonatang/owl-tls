@@ -9,6 +9,8 @@ export const messagesSlice = createSlice({
         rxMsgCounter: 0,
         connected: false,
         messages: [],
+        peerName: "They (not yet authenticated)",
+        yourName: "You (not yet authenticated)" 
     },
     reducers: {
         addTxMessage(state, { payload }) {
@@ -25,7 +27,10 @@ export const messagesSlice = createSlice({
         messageRxPlain: function (state, { payload }) {
             state.lastRxPlainMessage = payload;
         },
-        connectionEstablished: function (state) {
+        connectionEstablished: function (state, { payload }) {
+            let { peerName, yourName } = payload
+            state.peerName = peerName;
+            state.yourName = yourName
             state.connected = true
         }
     }
