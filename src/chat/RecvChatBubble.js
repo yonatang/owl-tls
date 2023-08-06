@@ -11,7 +11,7 @@ export default function RecvChatBubble({ message }) {
     const handleHide = () => setCollapsed(true)
 
     const encrpytedPart = collapsed ?
-        <span><a href="#" onClick={handleShow}>Show encrypted</a></span>
+        <span><Button variant="link" onClick={handleShow}>Show encrypted</Button></span>
         :
         <span><code>{encrypted}</code> [{category}] <Button variant='link' onClick={handleHide}>Hide</Button></span>
 

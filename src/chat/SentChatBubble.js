@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Button, ToastContainer } from "react-bootstrap";
 import ReactTimeAgo from "react-time-ago";
-import ClipboardToast from "../ClipboardToast";
+import AutoHideAlert from "../AutoHideAlert";
 
 
 export default function SentChatBubble({ message }) {
     const { timestamp, plain, encrypted, category } = message
-    const [showToast, setShowToast] = useState(false);
-    const [showFailedToast, setShowFailedToast] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
     const [collapsed, setCollapsed] = useState(false)
     const [collapsedOnce, setCollapsedOnce] = useState(false)
     const handleOnClick = () => {
@@ -15,9 +14,8 @@ export default function SentChatBubble({ message }) {
         navigator.clipboard.writeText(encrypted).then(
             () => {
                 setCollapsed(true)
-                setShowToast(true)
-            },
-            () => showFailedToast(true)
+                setShowAlert(true)
+            }
         );
     }
     const handleShow = () => setCollapsed(false)
@@ -31,11 +29,13 @@ export default function SentChatBubble({ message }) {
             <span>[{category}] <code style={{ userSelect: "all", cursor: "pointer" }} onClick={handleOnClick}>{encrypted}</code></span>
         </span>
     return <>
-        <ClipboardToast showFailed={showFailedToast} showSuccess={showToast} setShowFailed={setShowFailedToast} setShowSuccess={setShowToast} />
-
         <p style={{ textAlign: "left" }}>
             <ReactTimeAgo date={timestamp} /><br />
             {encrpytedPart}
+            <AutoHideAlert
+                show={showAlert}
+                onClose={() => setShowAlert(false)}
+                delay={2000}>Copied to clipboard</AutoHideAlert>
             <br />{plain}
         </p>
     </>

@@ -5,20 +5,22 @@ export const messagesSlice = createSlice({
     initialState: {
         lastTxPlainMessage: "",
         lastRxPlainMessage: "",
-        txMessages: [],
-        rxMessages: [],
+        txMsgCounter: 0,
+        rxMsgCounter: 0,
         connected: false,
         messages: [],
     },
     reducers: {
         addTxMessage(state, { payload }) {
             state.messages.push({ ...payload, timestamp: Date.now(), sentMessage: true })
+            state.txMsgCounter++
         },
         setLastTxPlainMessage(state, { payload }) {
             state.lastTxPlainMessage = payload;
         },
         addRxMessage: function (state, { payload }) {
             state.messages.push({ ...payload, timestamp: Date.now(), sentMessage: false })
+            state.rxMsgCounter++
         },
         messageRxPlain: function (state, { payload }) {
             state.lastRxPlainMessage = payload;
